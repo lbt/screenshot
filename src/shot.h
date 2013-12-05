@@ -32,6 +32,7 @@ public slots:
 signals:
     void activeChanged(bool);
     void leftChanged(int);
+    void shooting();
 
 private:
     bool m_active;

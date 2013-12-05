@@ -13,7 +13,7 @@ Name:       harbour-screenshot
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Screenshot for Sailfish
-Version:    0.1
+Version:    0.2
 Release:    1
 Group:      Qt/Qt
 License:    GPLv2
@@ -64,6 +64,7 @@ desktop-file-install --delete-original       \
 %{_datadir}/icons/hicolor/86x86/apps/%{name}.png
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/%{name}/qml
+%{_datadir}/%{name}/*.wav
 %{_bindir}/%{name}
 # >> files
 # << files

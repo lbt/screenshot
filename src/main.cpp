@@ -17,6 +17,10 @@ int main(int argc, char *argv[])
     QScopedPointer<QQuickView> view(SailfishApp::createView());
 
 
+    Shot* shot = new Shot;
+    view->rootContext()->setContextProperty("Shot", shot);
+    view->rootContext()->setContextProperty("MainView", view.data());
+
 //    Here's how you will add QML components whenever you start using them
 //    Check https://github.com/amarchen/Wikipedia for a more full example
 //    view->engine()->addImportPath(SailfishApp::pathTo("qml/components").toString());
@@ -24,9 +28,6 @@ int main(int argc, char *argv[])
 
     view->show();
 
-    Shot* shot = new Shot;
-    view->rootContext()->setContextProperty("Shot", shot);
-    view->rootContext()->setContextProperty("MainView", view.data());
 
     return app->exec();
 }

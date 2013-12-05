@@ -10,6 +10,7 @@ Shot::Shot(QObject *parent) : QObject(parent)
 }
 
 void Shot::ShootNow() {
+    emit shooting();
     QDBusConnection bus = QDBusConnection::sessionBus();
     QDBusInterface dbus_iface("org.nemomobile.lipstick", "/org/nemomobile/lipstick/screenshot",
                               "org.nemomobile.lipstick", bus);

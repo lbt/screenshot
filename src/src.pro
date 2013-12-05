@@ -23,10 +23,10 @@ desktop.path = /usr/share/applications
 icon.files = harbour-screenshot.png icon-cover-shoot.png
 icon.path = /usr/share/icons/hicolor/86x86/apps
 
-icon.files = harbour-screenshot.png icon-cover-shoot.png
-icon.path = /usr/share/icons/hicolor/86x86/apps
+sound.files = shotSound.wav tickSound.wav
+sound.path = $$DEPLOYMENT_PATH
 
-INSTALLS += target icon desktop  qml
+INSTALLS += target icon desktop qml sound
 
 SOURCES += main.cpp \
     shot.cpp
