@@ -15,8 +15,12 @@ void Shot::ShootNow() {
     QDBusInterface dbus_iface("org.nemomobile.lipstick", "/org/nemomobile/lipstick/screenshot",
                               "org.nemomobile.lipstick", bus);
     qDebug() << dbus_iface.call("saveScreenshot","");
-
+    QTimer::singleShot(200, this, SLOT(emitShotDone()));
 }
+void Shot::emitShotDone() {
+    emit shotDone();
+}
+
 void Shot::Cancel() {
     m_timer->stop();
     m_left = 0;

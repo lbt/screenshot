@@ -6,7 +6,7 @@ import "pages"
 ApplicationWindow
 {
     id: appWindow
-    initialPage: Snap { }
+    initialPage: Snap { id: snap }
 
     cover: CoverBackground  {
         Image {
@@ -64,24 +64,28 @@ ApplicationWindow
             CoverAction
             {
                 iconSource: "file:///usr/share/harbour-screenshot/qml/icon-cover-shoot.png"
-                onTriggered: Shot.Shoot(5)
+                onTriggered: snap.takeCover()
             }
         }
+        // Tie some audio to the Shot signals
+        Audio {
+            id: shotSound
+            source: "/usr/share/harbour-screenshot/shotSound.wav"
+        }
+        Audio {
+            id: tickSound
+            source: "/usr/share/harbour-screenshot/tickSound.wav"
+        }
+        Audio {
+            id: noSound
+            source: "/usr/share/harbour-screenshot/noSound.wav"
+        }
+        Connections {
+            target: Shot;
+            onShooting: { shotSound.play(); }
+            onLeftChanged: { if (Shot.left >0) tickSound.play();  }
+        }
+        // workaround a bug in QtMultimedia
+        Component.onCompleted: noSound.play()
     }
-
-    // Tie some audio to the Shot signals
-    Audio {
-        id: shotSound
-        source: "/usr/share/harbour-screenshot/shotSound.wav"
-    }
-    Audio {
-        id: tickSound
-        source: "/usr/share/harbour-screenshot/tickSound.wav"
-    }
-    Connections {
-        target: Shot;
-        onShooting: { shotSound.play(); }
-        onLeftChanged: { if (Shot.left >0) tickSound.play();  }
-    }
-    Component.onCompleted: console.log(Shot)
 }

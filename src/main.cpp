@@ -9,25 +9,24 @@
 #include <QGuiApplication>
 
 #include "shot.h"
-
+#include "viewmanager.h"
 
 int main(int argc, char *argv[])
 {
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
     QScopedPointer<QQuickView> view(SailfishApp::createView());
 
+    ViewManager* vm = new ViewManager(view.data(), app.data());
 
     Shot* shot = new Shot;
     view->rootContext()->setContextProperty("Shot", shot);
-    view->rootContext()->setContextProperty("MainView", view.data());
-
-//    Here's how you will add QML components whenever you start using them
-//    Check https://github.com/amarchen/Wikipedia for a more full example
-//    view->engine()->addImportPath(SailfishApp::pathTo("qml/components").toString());
+    view->rootContext()->setContextProperty("ViewManager", vm);
     view->setSource(SailfishApp::pathTo("qml/main.qml"));
 
-    view->show();
+	// The ViewManager will handle the close/show
+    vm->show();
 
-
+	QObject::connect(shot, SIGNAL(shotDone()),
+                     vm, SLOT(show()));
     return app->exec();
 }

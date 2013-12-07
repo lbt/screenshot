@@ -28,11 +28,13 @@ public:
 public slots:
     void ShootNow();
     void Update();
+    void emitShotDone();
 
 signals:
     void activeChanged(bool);
     void leftChanged(int);
     void shooting();
+    void shotDone();
 
 private:
     bool m_active;

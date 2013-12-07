@@ -23,14 +23,14 @@ desktop.path = /usr/share/applications
 icon.files = harbour-screenshot.png icon-cover-shoot.png
 icon.path = /usr/share/icons/hicolor/86x86/apps
 
-sound.files = shotSound.wav tickSound.wav
+sound.files = shotSound.wav tickSound.wav noSound.wav
 sound.path = $$DEPLOYMENT_PATH
 
 INSTALLS += target icon desktop qml sound
 
 SOURCES += main.cpp \
-    shot.cpp
-
+    shot.cpp \
+    viewmanager.cpp
 OTHER_FILES = \
 #    ../rpm/harbour-screenshot.yaml \
     ../rpm/harbour-screenshot.spec \
@@ -41,4 +41,5 @@ OTHER_FILES = \
 INCLUDEPATH += $$PWD
 
 HEADERS += \
-    shot.h
+    shot.h \
+    viewmanager.h
