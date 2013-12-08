@@ -32,22 +32,41 @@ Page {
         }
 
         Column {
-            width: page.width
+            width: parent.width
             spacing: Theme.paddingLarge
             PageHeader {
                 title: "Screenshot"
             }
-            Label {
+            Column {
                 width: parent.width
-                anchors.leftMargin: Theme.paddingLarge
-                anchors.rightMargin: Theme.paddingLarge
+                Label {
+                    width: parent.width - Theme.paddingLarge
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
 
-                horizontalAlignment: Text.AlignHCenter
-                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                    text: "A screenshot will be placed in the Pictures folder and will appear in the gallery."
+                }
+                Label {
+                    id: notes
+                    width: parent.width - Theme.paddingLarge
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
 
-                text: "A screenshot will be placed in the Pictures folder and will appear in the gallery\n"+
-                      "You can also use the cover to " +
-                      (noCover?"":"cancel or ") + "take a screenshot"
+                    text: "You can also use the cover to " +
+                          (noCover?"":"cancel or ") + "take a screenshot"
+
+                    Behavior on text {
+                        SequentialAnimation {
+                            PropertyAnimation { target: notes; properties: "opacity"; to: 0;
+                                duration: 300}
+                            PropertyAction { target: notes; property: "text" }
+                            PropertyAnimation { target: notes; properties: "opacity"; to: 2;
+                                duration: 300}
+                        }
+                    }
+                }
             }
             BackgroundItem {
                 width: parent.width
