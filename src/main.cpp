@@ -6,6 +6,7 @@
 #include <QScopedPointer>
 #include <QQuickView>
 #include <QQmlEngine>
+#include <QQmlContext>
 #include <QGuiApplication>
 
 #include "shot.h"
