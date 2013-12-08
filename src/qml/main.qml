@@ -83,7 +83,7 @@ ApplicationWindow
         Connections {
             target: Shot;
             onShooting: { shotSound.play(); }
-            onLeftChanged: { if (Shot.left >0) tickSound.play();  }
+            onLeftChanged: { if (Shot.left >0 && Shot.left <6) tickSound.play();  }
         }
         // workaround a bug in QtMultimedia
         Component.onCompleted: noSound.play()
