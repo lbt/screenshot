@@ -13,7 +13,7 @@ Name:       harbour-screenshot
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Screenshot for Sailfish
-Version:    0.2
+Version:    0.3
 Release:    1
 Group:      Qt/Qt
 License:    GPLv2
@@ -23,6 +23,7 @@ Requires:   libsailfishapp
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
+BuildRequires:  pkgconfig(Qt5DBus)
 BuildRequires:  pkgconfig(sailfishapp)
 BuildRequires:  desktop-file-utils
 
