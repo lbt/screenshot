@@ -4,6 +4,7 @@ import Sailfish.Silica 1.0
 Page {
     id: page
     property alias noCover: noCoverSwitch.checked
+    property alias delay: delayS.value
 
     SilicaFlickable {
         anchors.fill: parent
@@ -57,21 +58,35 @@ Page {
                     description: "No cover during countdown or screenshot (but also no way to cancel screenshot)"
                 }
             }
+            Slider {
+                id: delayS
+                width: parent.width
+                value: 5
+                minimumValue: 2
+                maximumValue: 15
+                stepSize: 1
+                valueText: value + "sec"
+                label: "Screenshot delay"
+            }
+            Label {
+                width: parent.width - Theme.paddingLarge
+                opacity: delay >= 5 ? 1 : 0
+                anchors.horizontalCenter: parent.horizontalCenter
+                horizontalAlignment: Text.AlignHCenter
+                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                text: "Countdown tick plays for the last 5 seconds"
+                Behavior on opacity {
+                    PropertyAnimation { duration: 300}
+                }
+            }
+
         }
-        Row {
-            anchors.horizontalCenter: parent.horizontalCenter
+        Button {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: Theme.paddingLarge
-            height: buttonA.height
-            Button {
-                id: buttonA
-                text: "2 sec delay"
-                onClicked: take(2)
-            }
-            Button {
-                text: "5 sec delay"
-                onClicked: take(5)
-            }
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: "Take in " + delay + " sec"
+            onClicked: take(delay)
         }
     }
 
@@ -88,6 +103,6 @@ Page {
 
     // Cover action
     function takeCover() {
-        take(5);
+        take(delay);
     }
 }
