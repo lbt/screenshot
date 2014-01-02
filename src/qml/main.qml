@@ -48,6 +48,13 @@ ApplicationWindow
             visible: Shot.active
             anchors.top : take.bottom
         }
+        Image {
+            id:snapImg
+            anchors.fill: parent
+            opacity: 0.3
+            fillMode: Image.PreserveAspectFit
+            source: "file://"+Shot.lastShot
+        }
 
         CoverActionList
         {
@@ -60,11 +67,25 @@ ApplicationWindow
         }
         CoverActionList
         {
-            enabled: !Shot.active
+            enabled: !Shot.active && Shot.lastShot == ""
             CoverAction
             {
                 iconSource: "file:///usr/share/harbour-screenshot/qml/icon-cover-shoot.png"
                 onTriggered: snap.takeCover()
+            }
+        }
+        CoverActionList
+        {
+            enabled: !Shot.active && Shot.lastShot != ""
+            CoverAction
+            {
+                iconSource: "file:///usr/share/harbour-screenshot/qml/icon-cover-shoot.png"
+                onTriggered: snap.takeCover()
+            }
+            CoverAction
+            {
+                iconSource: "image://theme/icon-m-delete"
+                onTriggered: Shot.deleteCurrent()
             }
         }
         // Tie some audio to the Shot signals
