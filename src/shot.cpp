@@ -6,7 +6,6 @@
 Shot::Shot(QObject *parent) : QObject(parent),
     m_left(0),
     m_timer(new QTimer(this)),
-    m_picDir("/home/nemo/Pictures/screenshots"),
     m_lastShotReq(""),
     m_lastShot("")
 {
@@ -17,6 +16,7 @@ Shot::Shot(QObject *parent) : QObject(parent),
         }
         qDebug()<< "Found pictures at " << m_picDir;
     } else {
+        m_picDir = QString("/home/") + "nemo/Pictures/screenshots"; // Harbour complains about the fallback path :/
         qDebug()<< "Fallback to pictures at " << m_picDir;
     }
     m_timer->setInterval(1000);
