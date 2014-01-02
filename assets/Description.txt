@@ -1,0 +1,16 @@
+Screenshot  your Jolla - great for making your friends jealous :)
+
+The screenshot appears in your Pictures/screenshots/ directory and is visible in Gallery.
+
+Thanks (kitos) for the comments everyone - very encouraging.
+
+Features:
+ * Hide the cover during screenshot
+ * Audible countdown
+ * Share screenshots via Gallery (new)
+ * Preview and quick delete in cover (new)
+ * Thumbnail takes you to Gallery for sharing (new)
+ * Easy delete (new)
+ * Screenshots go to their own folder (new)
+
+To use the Cover action to take or cancel a screenshot just touch the cover and pull left or right. If you do it slowly you can see what action will be taken first.
