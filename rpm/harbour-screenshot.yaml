@@ -20,11 +20,12 @@ PkgConfigBR:
 Requires:
 - libsailfishapp
 Files:
+- '%{_bindir}/%{name}'
+- '%defattr(644,root,root,-)'
 # Do not include whole %{_datadir}/applications as that would include tests too
 - '%{_datadir}/icons/hicolor/86x86/apps/%{name}.png'
 - '%{_datadir}/applications/%{name}.desktop'
 - '%{_datadir}/%{name}/qml'
 - '%{_datadir}/%{name}/*.wav'
-- '%{_bindir}/%{name}'
 PkgBR: []
 
