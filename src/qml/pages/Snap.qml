@@ -48,7 +48,7 @@ Page {
                 horizontalAlignment: Text.AlignHCenter
                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
 
-                text: "A screenshot is saved to the Pictures folder and will appear in Gallery."
+                text: "Saves to Pictures/screenshots/ (and appears in Gallery too)"
             }
             Label {
                 id: notes

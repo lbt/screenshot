@@ -1,16 +1,20 @@
 #include "shot.h"
 #include <QDebug>
 #include <QStringBuilder>
+#include <QDir>
 
 Shot::Shot(QObject *parent) : QObject(parent),
     m_left(0),
     m_timer(new QTimer(this)),
-    m_picDir("/home/nemo/Pictures"),
-    m_lastShotDT(),
+    m_picDir("/home/nemo/Pictures/screenshots"),
+    m_lastShotReq(""),
     m_lastShot("")
 {
     if (!QStandardPaths::standardLocations(QStandardPaths::PicturesLocation).isEmpty()) {
         m_picDir=QStandardPaths::standardLocations(QStandardPaths::PicturesLocation).first();
+        if (QDir().mkpath(m_picDir+"/screenshots")) {
+            m_picDir+="/screenshots";
+        }
         qDebug()<< "Found pictures at " << m_picDir;
     } else {
         qDebug()<< "Fallback to pictures at " << m_picDir;
@@ -21,39 +25,26 @@ Shot::Shot(QObject *parent) : QObject(parent),
 
 void Shot::ShootNow() {
     emit shooting();
-    m_lastShotDT=QDateTime::currentDateTime();
+    m_lastShotReq = m_picDir % "/"
+            % QDateTime::currentDateTime().toString("yyyyMMddhhmmss") % ".jpg";
     QDBusMessage reply;
     QDBusConnection bus = QDBusConnection::sessionBus();
     QDBusInterface dbus_iface("org.nemomobile.lipstick", "/org/nemomobile/lipstick/screenshot",
                               "org.nemomobile.lipstick", bus);
-    reply = dbus_iface.call("saveScreenshot","");
+    reply = dbus_iface.call("saveScreenshot",m_lastShotReq);
     qDebug() << reply;
     QTimer::singleShot(200, this, SLOT(emitShotDone()));
 }
 
 // This routine calls itself using a timer until the shot appears.
 void Shot::emitShotDone() {
-    QString file;
-    QDateTime trial = m_lastShotDT;
-    // There's a chance the screenshot takes a while...
-    int t=0;
-    do {
-        m_lastShot=m_picDir % "/" % trial.toString("yyyyMMddhhmmss") % ".png";
-        if (QFile(m_lastShot).exists()) {
-            emit lastShotChanged(m_lastShot);
-            emit shotDone();
-            qDebug()<< "Found a pic " << m_lastShot;
-            return;
-        }
-        trial = trial.addSecs(1);
-        t++;
-        qDebug()<< "Looking for a pic " << t;
-    } while (t<5);
-
-    // keep trying for 5s
-    if (m_lastShotDT.secsTo(QDateTime::currentDateTime()) < 5)
-        QTimer::singleShot(200, this, SLOT(emitShotDone()));
-
+    if (QFile(m_lastShotReq).exists()) {
+        m_lastShot = m_lastShotReq;
+        emit lastShotChanged(m_lastShot);
+        emit shotDone();
+        qDebug()<< "Found a pic " << m_lastShot;
+        return;
+    }
     m_lastShot="";
 }
 

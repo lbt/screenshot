@@ -45,7 +45,7 @@ private:
     int m_left;
     QTimer* m_timer;
     QString m_picDir;
-    QDateTime m_lastShotDT; // Time shot taken
+    QString m_lastShotReq; // File requested
     QString m_lastShot;    // file found near time taken
                             // null = not checked / "" not found / "val"
 };
