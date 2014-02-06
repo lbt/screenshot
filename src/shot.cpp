@@ -7,7 +7,8 @@ Shot::Shot(QObject *parent) : QObject(parent),
     m_left(0),
     m_timer(new QTimer(this)),
     m_lastShotReq(""),
-    m_lastShot("")
+    m_lastShot(""),
+    m_format("jpg")
 {
     if (!QStandardPaths::standardLocations(QStandardPaths::PicturesLocation).isEmpty()) {
         m_picDir=QStandardPaths::standardLocations(QStandardPaths::PicturesLocation).first();
@@ -26,7 +27,7 @@ Shot::Shot(QObject *parent) : QObject(parent),
 void Shot::ShootNow() {
     emit shooting();
     m_lastShotReq = m_picDir % "/"
-            % QDateTime::currentDateTime().toString("yyyyMMddhhmmss") % ".jpg";
+            % QDateTime::currentDateTime().toString("yyyyMMddhhmmss") % "." % m_format;
     QDBusMessage reply;
     QDBusConnection bus = QDBusConnection::sessionBus();
     QDBusInterface dbus_iface("org.nemomobile.lipstick", "/org/nemomobile/lipstick/screenshot",
@@ -87,6 +88,14 @@ void Shot::deleteCurrent() {
     }
 }
 
+void Shot::setFormat(QString arg)
+{
+    if (m_format != arg) {
+        m_format = arg;
+        emit formatChanged(arg);
+    }
+}
+
 QString Shot::lastShot() {
     return m_lastShot;
 }
@@ -100,4 +109,5 @@ int Shot::left() {
 }
 
 void Shot::setLeft(int a) {
+    Q_UNUSED(a)
 }

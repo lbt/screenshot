@@ -1,4 +1,4 @@
-Screenshot  your Jolla - great for making your friends jealous :)
+Screenshot your Jolla - great for making your friends jealous :)
 
 The screenshot appears in your Pictures/screenshots/ directory and is visible in Gallery.
 
@@ -7,10 +7,36 @@ Thanks (kitos) for the comments everyone - very encouraging.
 Features:
  * Hide the cover during screenshot
  * Audible countdown
+ * Share screenshots via Gallery
+ * Preview and quick delete in cover
+ * Thumbnail takes you to Gallery for sharing
+ * Easy delete
+ * Screenshots go to their own folder
+ * Select jpg or png format (new)
+
+To use the Cover action to take or cancel a screenshot just touch the cover and pull left or right. If you do it slowly you can see what action will be taken first.
+
+
+0.5 brings:
+ * Select jpg or png format (new)
+
+The jpg format introduced for compatibility with Gallery sharing can look very jagged; I've brought back png as a setting. Just pull left to get to the Settings. You can share png via Gallery if you set 'Include metadata'
+
+
+Old Changes
+
+0.4 brings:
  * Share screenshots via Gallery (new)
  * Preview and quick delete in cover (new)
  * Thumbnail takes you to Gallery for sharing (new)
  * Easy delete (new)
  * Screenshots go to their own folder (new)
 
-To use the Cover action to take or cancel a screenshot just touch the cover and pull left or right. If you do it slowly you can see what action will be taken first.
+In detail:
+* Save as jpg format to Pictures/screenshots/
+* Re-arrange page to make room for a snapshot preview
+   Preview launches Gallery
+  Add a delete button with remorse timer
+  Reduce the emphasis on countdown note
+ * Show last screenshot on cover and add a delete action if there's something to delete
+ * Add support for accessing the last screenshot taken and for deleting it

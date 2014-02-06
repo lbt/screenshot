@@ -1,37 +1,13 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import QtGraphicalEffects 1.0
 
 Page {
     id: page
-    property alias noCover: noCoverSwitch.checked
     property alias delay: delayS.value
+    property alias noCover: noCoverSwitch.checked
 
     SilicaFlickable {
         anchors.fill: parent
-        PullDownMenu {
-            id: pullDownMenu
-            visible: false // Until implemented
-            MenuItem {
-                text: "Timer"
-                onClicked: {
-                    console.log("Timer picked")
-                }
-            }
-            MenuItem {
-                text: "Shake"
-                onClicked: {
-                    console.log("Shake picked")
-                }
-            }
-            MenuItem {
-                text: "Proximity"
-                onClicked: {
-                    console.log("Proximity picked")
-                }
-            }
-        }
-
         PageHeader {
             id:pHeader
             width: parent.width
@@ -137,7 +113,7 @@ Page {
             id: hideCover
             width: parent.width
             height:noCoverSwitch.height
-            anchors.bottom:delayS.top
+            anchors.bottom: delayS.top
             TextSwitch {
                 id: noCoverSwitch
                 text: "Hide Cover"
@@ -184,6 +160,11 @@ Page {
         }
     }
 
+    onStatusChanged: {
+        if (status === PageStatus.Active && pageStack.depth === 1) {
+            pageStack.pushAttached("Settings.qml", {});
+        }
+    }
     // General take action
     function take(sec){
         Shot.Shoot(sec);
@@ -198,4 +179,5 @@ Page {
     function takeCover() {
         take(delay);
     }
+
 }
