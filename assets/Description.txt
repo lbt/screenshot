@@ -6,16 +6,21 @@ Thanks (kitos) for the comments everyone - very encouraging.
 
 Features:
  * Hide the cover during screenshot
- * Audible countdown
+ * Audible countdown and silent mode
  * Share screenshots via Gallery
  * Preview and quick delete in cover
  * Thumbnail takes you to Gallery for sharing
  * Easy delete
  * Screenshots go to their own folder
- * Select jpg or png format (new)
+ * Select jpg or png format
+ * Saves your preferences (new)
 
 To use the Cover action to take or cancel a screenshot just touch the cover and pull left or right. If you do it slowly you can see what action will be taken first.
 
+
+0.6 brings - by popular request :
+ * Silent mode - no ticks or click
+ * Saves preferences
 
 0.5 brings:
  * Select jpg or png format (new)
