@@ -114,8 +114,10 @@ Page {
             width: parent.width
             height:noCoverSwitch.height
             anchors.bottom: delayS.top
+            anchors.left: parent.left
             TextSwitch {
                 id: noCoverSwitch
+                width: parent.width
                 text: "Hide Cover"
                 description: "No cover during countdown or screenshot (but also no way to cancel screenshot)"
             }
@@ -124,12 +126,13 @@ Page {
             id: delayS
             anchors.bottom: countLabel.top
             width: parent.width
-            value: 5
+            value: Shot.delay
             minimumValue: 2
             maximumValue: 15
             stepSize: 1
             valueText: value + "sec"
             label: "Screenshot delay"
+            onValueChanged: Shot.setDelay(value);
         }
         Label {
             id:countLabel
@@ -137,7 +140,7 @@ Page {
             anchors.bottomMargin: Theme.paddingMedium
             width: parent.width - Theme.paddingLarge
             opacity: delay >= 5 ? 1 : 0
-            visible: opacity > 0.01
+            visible: opacity > 0.01 && (! Shot.silent)
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: Theme.fontSizeSmall
@@ -149,6 +152,19 @@ Page {
                     PropertyAnimation { property: "opacity"; duration: 300}
                 }
             }
+        }
+        Label {
+            id:countLabel2
+            anchors.bottom: takeButton.top
+            anchors.bottomMargin: Theme.paddingMedium
+            width: parent.width - Theme.paddingLarge
+            visible: Shot.silent
+            anchors.horizontalCenter: parent.horizontalCenter
+            horizontalAlignment: Text.AlignHCenter
+            font.pixelSize: Theme.fontSizeSmall
+            color: Theme.secondaryColor
+            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+            text: "No countdown tick or 'click'"
         }
         Button {
             id:takeButton

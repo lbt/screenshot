@@ -3,12 +3,14 @@
 #include <QStringBuilder>
 #include <QDir>
 
-Shot::Shot(QObject *parent) : QObject(parent),
-    m_left(0),
-    m_timer(new QTimer(this)),
-    m_lastShotReq(""),
-    m_lastShot(""),
-    m_format("jpg")
+Shot::Shot(QObject *parent) : QObject(parent)
+  , m_left(0)
+  , m_timer(new QTimer(this))
+  , m_lastShotReq("")
+  , m_lastShot("")
+  , m_settings(QDir(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation))
+               .filePath(QCoreApplication::applicationName())+"/screenshot.ini",
+               QSettings::IniFormat)
 {
     if (!QStandardPaths::standardLocations(QStandardPaths::PicturesLocation).isEmpty()) {
         m_picDir=QStandardPaths::standardLocations(QStandardPaths::PicturesLocation).first();
@@ -16,12 +18,21 @@ Shot::Shot(QObject *parent) : QObject(parent),
             m_picDir+="/screenshots";
         }
         qDebug()<< "Found pictures at " << m_picDir;
-    } else {
-        m_picDir = QString("/home/") + "nemo/Pictures/screenshots"; // Harbour complains about the fallback path :/
-        qDebug()<< "Fallback to pictures at " << m_picDir;
     }
+    qDebug()<< "Settings stored in " << m_settings.fileName();
+
+    m_silent = m_settings.value("silent", false).toBool();
+    m_format = m_settings.value("format", "jpg").toString();
+    m_delay = m_settings.value("delay", 5).toInt();
+
     m_timer->setInterval(1000);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(Update()));
+}
+
+Shot::~Shot()
+{
+    qDebug()<< "Settings storing";
+    qDebug()<< "Settings stored";
 }
 
 void Shot::ShootNow() {
@@ -92,7 +103,26 @@ void Shot::setFormat(QString arg)
 {
     if (m_format != arg) {
         m_format = arg;
+        m_settings.setValue("format", m_format);
         emit formatChanged(arg);
+    }
+}
+
+void Shot::setSilent(bool arg)
+{
+    if (m_silent != arg) {
+        m_silent = arg;
+        m_settings.setValue("silent", m_silent);
+        emit silentChanged(arg);
+    }
+}
+
+void Shot::setDelay(int arg)
+{
+    if (m_delay != arg) {
+        m_delay = arg;
+        m_settings.setValue("delay", m_delay);
+        emit delayChanged(arg);
     }
 }
 
