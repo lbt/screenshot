@@ -19,15 +19,15 @@ int main(int argc, char *argv[])
 
     ViewManager* vm = new ViewManager(view.data(), app.data());
 
-    Shot* shot = new Shot;
-    view->rootContext()->setContextProperty("Shot", shot);
+    Shot shot;
+    view->rootContext()->setContextProperty("Shot", &shot);
     view->rootContext()->setContextProperty("ViewManager", vm);
     view->setSource(SailfishApp::pathTo("qml/main.qml"));
 
 	// The ViewManager will handle the close/show
     vm->show();
 
-	QObject::connect(shot, SIGNAL(shotDone()),
+    QObject::connect(&shot, SIGNAL(shotDone()),
                      vm, SLOT(show()));
     return app->exec();
 }
